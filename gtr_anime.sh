@@ -112,7 +112,7 @@ if [[ ! -f "$ODIR/tmp/raw_subs.txt" ]] || [[ $(wc -l < $ODIR/tmp/raw_subs.txt) -
 		echo "Processing clip from ${ts[0]} to ${ts[1]}"
 
 		# Output the audio between those times
-		ffmpeg -i "$ODIR/old.mp4" -ss ${ts[0]} -t $(python3 -c "print(${ts[1]} - ${ts[0]})") \
+		ffmpeg -i "$ODIR/old.mp4" -ss ${ts[0]} -t $(echo "${ts[1]}-${ts[0]}" | bc) \
 			-ar 44100 -ac 1 "$ODIR/tmp/${ts[0]}.flac" &> /dev/null
 		
 		# Google Speech API as specified to save the result to jap
