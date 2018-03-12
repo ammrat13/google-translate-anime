@@ -1,5 +1,5 @@
 # google-translate-anime
-A script that automatically translates anime with Google Translate. Right now it only generates subtitles. Dubbing capability may be added in the future. Files that are too large to be uploaded have been replaces by a file named `$REPLACEDFILENAME.reference` that contains a description of where to obtain the file.
+A script that automatically translates anime with Google Translate. Right now it only generates subtitles. Dubbing capability may be added in the future. Files that are too large to be uploaded have been replaced by a file named `$REPLACEDFILENAME.reference` that contains a description of where to obtain the file.
 
 # Requirements
 This script was developed on a Linux system and works best on Linux. The commands this script requires to run are:
