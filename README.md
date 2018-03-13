@@ -9,6 +9,7 @@ This script was developed on a Linux system and works best on Linux. The command
 * `youtube-dl`
 * `curl`
 * `jq`
+* `bc`
 
 # Usage
 Make sure all files are able to be executed as programs. Run `./gtr_anime.sh $ODIR $VIDLOC $SUBLOC` where `$ODIR` is the directory to output to, `$VIDLOC` is either the location of or the link to the video, and `$SUBLOC` is either the location of or the link to the subtitles file.
