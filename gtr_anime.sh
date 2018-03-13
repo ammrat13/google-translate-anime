@@ -235,7 +235,6 @@ for (( i=-1; i<${#vid_times[@]}; i++ )); do
 			rm "$ODIR/tmp/tmpvid.mp4"
 			rm "$ODIR/tmp/tmpvid2.mp4"
 			rm "$ODIR/newp.mp4"
-			exit
 		else
 			# Audio shorter than video
 			# Crop first part of video
