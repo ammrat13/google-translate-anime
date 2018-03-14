@@ -35,7 +35,7 @@ with open(sys.argv[1], "r") as old_sub, open(sys.argv[2], "r") as new_sub:
 		elif state == 1:
 			new = new_sub.readline().strip()
 			if new == "null":
-				print("[Uninteligible]")
+				print("[Censored]")
 			else:
 				print(limit_char(new, 50))
 			state = 2
