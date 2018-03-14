@@ -3,7 +3,7 @@ A script that automatically translates anime with Google Translate. It can gener
 
 # Requirements
 This script was developed on Ubuntu 16.04 LTS and works best on Linux. The commands this script requires to run are:
-* Standard Linux Utilities (e.g. `awk`, `bc`, `cp`, `echo`)
+* Standard Linux Utilities (e.g. `bash`, `awk`, `bc`, `cp`, `echo`)
 * `python3`
 * `ffmpeg`
 * `youtube-dl`
@@ -12,6 +12,9 @@ This script was developed on Ubuntu 16.04 LTS and works best on Linux. The comma
 
 # Usage
 Make sure all files are able to be executed as programs. Run `./gtr_anime.sh $ODIR $VIDLOC $SUBLOC` where `$ODIR` is the directory to output to, `$VIDLOC` is either the location of or the link to the video, and `$SUBLOC` is either the location of or the link to the subtitles file.
+
+# Examples
+* Attack On Titan Episode 1: `./gtr_anime.sh odir http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251 http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251`
 
 # Compatibility
 These lists may be expanded in the future.
