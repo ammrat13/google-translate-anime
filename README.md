@@ -23,4 +23,4 @@ These lists may be expanded in the future.
 ##### Subtitle File Types:
 * `.srt`
 ##### Websites:
-* `crunchyroll.com`
+* `crunchyroll.com`: Note that there is no reliable way to download from crunchyroll. This program will try, but it will likely fail.
