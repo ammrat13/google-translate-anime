@@ -62,7 +62,7 @@ if [[ ! -f "$ODIR/old.mp4" ]]; then
 	# If the location is a valid url, download it
 	elif [[ $VIDLOC =~ http[^\s]* ]]; then
 		echo "The string $VIDLOC is a url. Downloading video ..."
-		download_vid_url $VIDLOC
+		download_vid_url $VIDLOC &> /dev/null
 	fi
 
 	# Make sure the file exists now
@@ -86,7 +86,7 @@ if [[ ! -f "$ODIR/old.srt" ]]; then
 	# If the location is a valid url, download it
 	elif [[ $SUBLOC =~ http[^\s]* ]]; then
 		echo "The string $SUBLOC is a url. Downloading subtitles ..."
-		download_sub_url $SUBLOC
+		download_sub_url $SUBLOC &> /dev/null
 	fi
 
 	# Make sure the file exists now
