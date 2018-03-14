@@ -164,6 +164,11 @@ if [[ ! -f "$ODIR/tmp/raw_subs.txt" ]] || [[ $(wc -l < $ODIR/tmp/raw_subs.txt) -
 else
 	echo "The video has already been translated. No need to redo."
 fi
+# Make sure translation was successful
+if [[ ! -f "$ODIR/tmp/raw_subs.txt" ]] || [[ $(wc -l < $ODIR/tmp/raw_subs.txt) -ne ${#vid_times[@]} ]]; then
+	echo "Translation failed. Terminating."
+	exit
+fi
 
 echo ""
 
@@ -191,6 +196,12 @@ for line in ${vid_times[@]}; do
 			ffmpeg -f lavfi -i "sine=frequency=1000:duration=$(echo "${ts[1]}-${ts[0]}+1" | bc)" \
 				-ac 2 "$ODIR/tmp/${ts[0]}.trans.m4a" &> /dev/null
 		fi
+	fi
+
+	# Make sure voice generation succeeded
+	if [[ ! -f "$ODIR/tmp/${ts[0]}.trans.m4a" ]]; then
+		echo "Failed to generate voice clip $ODIR/tmp/${ts[0]}.trans.m4a. Terminating."
+		exit
 	fi
 
 	i=$i+1
@@ -289,7 +300,14 @@ for (( i=-1; i<${#vid_times[@]}; i++ )); do
 			fi
 		fi
 	fi
+
+	# Make sure video generation was successful
+	if [[ ! -f "$ODIR/tmp/pm$i.mp4" ]]; then 
+		echo "Failed to generate video clip $ODIR/tmp/pm$i.mp4. Terminating."
+		exit
+	fi
 done
+
 
 # Merge video clips
 echo "Merging video clips (this may take a while) ..."
@@ -308,3 +326,9 @@ done
 cmd="$cmd concat=n=$(expr ${#vid_times[@]} + 1):v=1:a=1 [v] [a]'"
 cmd="$cmd -map '[v]' -map '[a]' '$ODIR/new.mp4'"
 eval "$cmd" &> /dev/null
+
+# Make sure merge was successful
+if [[ ! -f "$ODIR/new.mp4" ]]; then
+	echo "Failed to generate video. Terminating."
+	exit
+fi
