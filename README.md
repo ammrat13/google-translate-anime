@@ -4,6 +4,7 @@ A script that automatically translates anime with Google Translate. It can gener
 # Requirements
 This script was developed on Ubuntu 16.04 LTS and works best on Linux. The commands this script requires to run are:
 * Standard Linux Utilities (e.g. `bash`, `awk`, `bc`, `cp`, `echo`)
+* Access to the Google Cloud Platform and access to the `gcloud` command
 * `python3`
 * `ffmpeg`
 * `youtube-dl`
