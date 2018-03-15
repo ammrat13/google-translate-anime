@@ -3,13 +3,13 @@ A script that automatically translates anime with Google Translate. It can gener
 
 # Requirements
 This script was developed on Ubuntu 16.04 LTS and works best on Linux. The commands this script requires to run are:
-* Standard Linux Utilities (e.g. `bash`, `awk`, `bc`, `getopts`)
+* Standard Linux Utilities (e.g. `bash`, `awk`, `bc`, `curl`, `getopts`)
 * Access to the Google Cloud Platform and access to the `gcloud` command
-* `python3`
 * `ffmpeg` (Must be version `3.4.x` or higher)
-* `youtube-dl` (Must be the most up to date version; Update with `youtube-dl -U`)
-* `curl`
-* `jq`
+* `python3` (Python 2 is not supported; It must be Python 3)
+* `youtube-dl` (Available through `pip`; Must be updated with `youtube-dl -U`)
+* `jq` (Available through `apt`)
+* `gtts-cli` (Available through `pip`)
 
 # Usage
 Make sure all files are in the same directory and able to be executed as programs. The command structure is `path/to/gtr_anime.sh [OPTIONS]`, where `[OPTIONS]` can contain:
