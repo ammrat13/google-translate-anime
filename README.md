@@ -13,7 +13,7 @@ This script was developed on Ubuntu 16.04 LTS and works best on Linux. The comma
 
 # Usage
 Make sure all files are in the same directory and able to be executed as programs. The command structure is `path/to/gtr_anime.sh [OPTIONS]`, where `[OPTIONS]` can contain:
-* `-o OUTPUT_DIRECTORY`: Where to output all the files (required)
+* `-o OUTPUT_DIRECTORY`: **(REQUIRED)** Where to output all the files
 * `-v VIDEO_LOCARTION`: The url or file location of the video file
 * `-s SUB_LOCATION`: The url or file location of the subtitle file
 * `-b`: Clean temporary and output files before running
