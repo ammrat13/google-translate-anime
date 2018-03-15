@@ -38,15 +38,19 @@ function download_sub_url () {
 
 
 # Parse command line options
+APIKEY=""			# API Key for Google Cloud
 ODIR=""				# Output directory
 VIDLOC=""			# Location or url of the video
 SUBLOC=""			# Location or url of the subtitles
 CLEAN_START=false	# Clear temporary and output files on start?
 CLEAN_END=false		# Clear temporary files on end?
-while getopts ":o:v:s:ba" opt; do
+while getopts ":o:k:v:s:ba" opt; do
 	case $opt in 
 		o) 
 			ODIR=$OPTARG
+			;;
+		k)
+			APIKEY=$OPTARG
 			;;
 		v)
 			VIDLOC=$OPTARG
@@ -69,9 +73,13 @@ while getopts ":o:v:s:ba" opt; do
 			;;
 	esac
 done
-# Make sure output directory was set
+# Make sure output directory and key were set
 if [[ -z "$ODIR" ]]; then
 	echo "Error: Output directory is required"
+	exit
+fi
+if [[ -z "$APIKEY" ]]; then
+	echo "Error: Google Cloud API key is required"
 	exit
 fi
 
@@ -176,10 +184,9 @@ for line in ${vid_times[@]}; do
 				}
 			}" | \
 			curl -s -X POST \
-				-H "Authorization: Bearer "$(gcloud auth print-access-token) \
 				-H "Content-Type: application/json; charset=utf-8" \
 				-d @- \
-				"https://speech.googleapis.com/v1/speech:recognize" | \
+				"https://speech.googleapis.com/v1/speech:recognize?key=$APIKEY" | \
 			# Pipe the result for processing
 			jq -r .results[0].alternatives[0].transcript
 		)
@@ -188,13 +195,12 @@ for line in ${vid_times[@]}; do
 		eng=$(
 			curl -s -X POST \
 			-H "Content-Type: application/json" \
-			-H "Authorization: Bearer "$(gcloud auth print-access-token) \
 			--data "{
 				'q': '$jap',
 				'source': 'ja',
 				'target': 'en',
 				'format': 'text'
-			}" "https://translation.googleapis.com/language/translate/v2" | \
+			}" "https://translation.googleapis.com/language/translate/v2?key=$APIKEY" | \
 			jq -r .data.translations[0].translatedText
 		)
 
