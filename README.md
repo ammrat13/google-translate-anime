@@ -12,7 +12,7 @@ This script was developed on Ubuntu 16.04 LTS and works best on Linux. The comma
 * `gtts-cli` (Available through `pip`)
 
 # Usage
-Make sure all files are in the same directory and able to be executed as programs. The command structure is `path/to/gtr_anime.sh [OPTIONS]`, where `[OPTIONS]` can contain:
+Make sure all files are in the same directory and are able to be executed as programs. The command structure is `path/to/gtr_anime.sh [OPTIONS]`, where `[OPTIONS]` can contain:
 * `-o $OUTPUT_DIRECTORY`: **(REQUIRED)** Where to output all the files
 * `-k $API_KEY`: **(REQUIRED)** Your API Key for the Google Cloud Platform
 * `-v $VIDEO_LOCATION`: The url or file location of the video file
