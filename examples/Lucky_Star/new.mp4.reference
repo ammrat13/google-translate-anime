@@ -1,2 +1,2 @@
 The "translated" version of the first episode of Lucky Star.
-Will be generated automatically when `./gtr_anime.sh examples/Lucky_Star http://www.crunchyroll.com/lucky-star/episode-1-the-girl-who-dashes-off-751179 http://www.crunchyroll.com/lucky-star/episode-1-the-girl-who-dashes-off-751179` is run.
+Will be generated automatically when `./gtr_anime.sh -o examples/Lucky_Star -v http://www.crunchyroll.com/lucky-star/episode-1-the-girl-who-dashes-off-751179 -s http://www.crunchyroll.com/lucky-star/episode-1-the-girl-who-dashes-off-751179` is run.
