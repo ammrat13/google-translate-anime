@@ -3,19 +3,25 @@ A script that automatically translates anime with Google Translate. It can gener
 
 # Requirements
 This script was developed on Ubuntu 16.04 LTS and works best on Linux. The commands this script requires to run are:
-* Standard Linux Utilities (e.g. `bash`, `awk`, `bc`, `cp`, `echo`)
+* Standard Linux Utilities (e.g. `bash`, `awk`, `bc`, `getopts`)
 * Access to the Google Cloud Platform and access to the `gcloud` command
 * `python3`
-* `ffmpeg`
-* `youtube-dl`
+* `ffmpeg` (Must be version `3.4.x` or higher)
+* `youtube-dl` (Must be the most up to date version; Update with `youtube-dl -U`)
 * `curl`
 * `jq`
 
 # Usage
-Make sure all files are able to be executed as programs. Run `./gtr_anime.sh $ODIR $VIDLOC $SUBLOC` where `$ODIR` is the directory to output to, `$VIDLOC` is either the location of or the link to the video, and `$SUBLOC` is either the location of or the link to the subtitles file.
+Make sure all files are in the same directory and able to be executed as programs. The command structure is `path/to/gtr_anime.sh [OPTIONS]`, where `[OPTIONS]` can contain:
+* `-o OUTPUT_DIRECTORY`: Where to output all the files (required)
+* `-v VIDEO_LOCARTION`: The url or file location of the video file
+* `-s SUB_LOCATION`: The url or file location of the subtitle file
+* `-b`: Clean temporary and output files before running
+* `-a`: Clean temporary files after running
 
 # Examples
-* Attack On Titan Episode 1: `./gtr_anime.sh odir http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251 http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251`
+* Attack On Titan Episode 1: `./gtr_anime.sh -o odir -v http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251 -s http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251`
+* Lucky Star Episode 1: `./gtr_anime.sh -o odir -v http://www.crunchyroll.com/lucky-star/episode-1-the-girl-who-dashes-off-751179 -s http://www.crunchyroll.com/lucky-star/episode-1-the-girl-who-dashes-off-751179`
 
 # Compatibility
 These lists may be expanded in the future.
