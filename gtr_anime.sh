@@ -10,10 +10,7 @@
 ################################################################################
 
 
-# Rename the parameters so the code is more clear
-ODIR=$1
-VIDLOC=$2
-SUBLOC=$3
+echo ""
 
 # Download subroutine. Downloads the video from the url specified
 function download_vid_url () {
@@ -40,11 +37,58 @@ function download_sub_url () {
 }
 
 
+# Parse command line options
+ODIR=""				# Output directory
+VIDLOC=""			# Location or url of the video
+SUBLOC=""			# Location or url of the subtitles
+CLEAN_START=false	# Clear temporary and output files on start?
+CLEAN_END=false		# Clear temporary files on end?
+while getopts ":o:v:s:ba" opt; do
+	case $opt in 
+		o) 
+			ODIR=$OPTARG
+			;;
+		v)
+			VIDLOC=$OPTARG
+			;;
+		s)
+			SUBLOC=$OPTARG
+			;;
+		b)
+			CLEAN_START=true
+			;;
+		a)
+			CLEAN_END=true
+			;;
+		\?)
+			echo "Error: Invalid option encountered -$OPTARG"
+			exit
+			;;
+		:)
+			true # Do nothing
+			;;
+	esac
+done
+# Make sure output directory was set
+if [[ -z "$ODIR" ]]; then
+	echo "Error: Output directory is required"
+	exit
+fi
+
+# Clean if we have to
+if $CLEAN_START; then
+	echo "Cleaning temporary and output files ..."
+	echo ""
+	rm -rf "$ODIR/tmp"
+	rm -f "$ODIR/new.mp4"
+	rm -f "$ODIR/new.srt"
+fi
+
 # Create the output directories if they do not exist
-if [ ! -d $ODIR ]; then
+if [[ ! -d $ODIR ]]; then
 	mkdir $ODIR
 fi
-if [ ! -d "$ODIR/tmp" ]; then
+if [[ ! -d "$ODIR/tmp" ]]; then
 	mkdir $ODIR/tmp
 fi
 
@@ -208,6 +252,11 @@ for line in ${vid_times[@]}; do
 
 	# Make sure voice generation succeeded
 	if [[ ! -f "$ODIR/tmp/${ts[0]}.trans.m4a" ]] || [[ ! -s "$ODIR/tmp/${ts[0]}.trans.m4a" ]]; then
+		# Try writing a 1000 Hz sine wave
+		ffmpeg -y -f lavfi -i "sine=frequency=1000:duration=$(echo "${ts[1]}-${ts[0]}+1" | bc)" \
+			-ac 2 "$ODIR/tmp/${ts[0]}.trans.m4a" &> /dev/null
+	fi
+	if [[ ! -f "$ODIR/tmp/${ts[0]}.trans.m4a" ]] || [[ ! -s "$ODIR/tmp/${ts[0]}.trans.m4a" ]]; then
 		echo "Failed to generate voice clip $ODIR/tmp/${ts[0]}.trans.m4a. Terminating."
 		exit
 	fi
@@ -342,4 +391,13 @@ eval "$cmd" &> /dev/null
 if [[ ! -f "$ODIR/new.mp4" ]] || [[ ! -s "$ODIR/new.mp4" ]]; then
 	echo "Failed to generate video. Terminating."
 	exit
+fi
+
+echo ""
+
+
+# Clean if we have to
+if $CLEAN_END; then
+	echo "Cleaning temporary files ..."
+	rm -rf "$ODIR/tmp"
 fi
