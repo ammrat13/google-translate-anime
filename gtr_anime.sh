@@ -14,24 +14,20 @@ echo ""
 
 # Download subroutine. Downloads the video from the url specified
 function download_vid_url () {
-	# Rename parameters to make things more clear
-	URL=$1
 	# Check each possible site
 	# Crunchyroll
-	if [[ $URL =~ http[s]?:\/\/www.crunchyroll\.com[^\s]* ]]; then
-		youtube-dl -o "$ODIR/old.mp4" -f worst $URL
+	if [[ $1 =~ http[s]?:\/\/www.crunchyroll\.com[^\s]* ]]; then
+		youtube-dl -o "$ODIR/old.mp4" -f worst $1
 	fi
 }
 
 # Download subroutine. Downloads the subtitles from the url specified
 function download_sub_url () {
-	# Rename parameters to make things more clear
-	URL=$1
 	# Check each possible site
 	# Crunchyroll
-	if [[ $URL =~ http[s]?:\/\/www.crunchyroll\.com[^\s]* ]]; then
+	if [[ $1 =~ http[s]?:\/\/www.crunchyroll\.com[^\s]* ]]; then
 		youtube-dl -o "$ODIR/old.srt" --write-sub --sub-format srt \
-			--sub-lang enUS --skip-download $URL
+			--sub-lang enUS --skip-download $1
 		mv $ODIR/old.enUS.srt $ODIR/old.srt
 	fi
 }
