@@ -18,6 +18,7 @@ Make sure all files are in the same directory and are able to be executed as pro
 * `-s $SUB_LOCATION`: The url or file location of the subtitle file
 * `-b`: Clean temporary and output files before running
 * `-a`: Clean temporary files after running
+* `-h`: Print help message and quit
 
 # Examples
 * Attack On Titan Episode 1: `./gtr_anime.sh -o $OUTPUT_DIRECTORY -k $YOUR_KEY -v http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251 -s http://www.crunchyroll.com/attack-on-titan/episode-1-to-you-2000-years-in-the-future-the-fall-of-zhiganshina-1-623251`
