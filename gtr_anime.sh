@@ -6,7 +6,7 @@
 # This program will take in an output directory, the location of the video 
 # file, and the location of the audio file. If the locations are urls, the it 
 # will download from that url. It will then put the subtitles through google 
-# translate. It will output a "translated" subtitle file.
+# translate. It will output a "translated" subtitle file and dubbed video.
 ################################################################################
 
 
