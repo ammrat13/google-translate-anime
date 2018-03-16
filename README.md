@@ -26,7 +26,7 @@ Make sure all files are in the same directory and are able to be executed as pro
 # Compatibility
 These lists may be expanded in the future.
 ##### Video File Types:
-* `.mp4`
+* Anything supported by `ffmpeg` (a full list can be found at [https://www.ffmpeg.org/general.html#File-Formats](https://www.ffmpeg.org/general.html#File-Formats))
 ##### Subtitle File Types:
 * `.srt`
 ##### Websites:
