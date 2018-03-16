@@ -12,6 +12,25 @@
 
 echo ""
 
+
+# Prints a help message
+function help_mess () {
+	echo "gtr_anime.sh"
+	echo "A script that automatically translates anime with Google Translate. It can generate subtitles and dub (though the audio in the dub does not match with the subtitles)."
+	echo ""
+	echo "Usage: /path/to/gtr_anime.sh [OPTIONS]"
+	echo " -o OUTPUT_DIRECTORY: (REQUIRED) Where to output all the files"
+	echo " -k API_KEY:          (REQUIRED) Your API Key for the Google Cloud Platform"
+	echo " -v VID_LOCATION:     The url or file location of the video file"
+	echo " -s SUB_LOCATION:     The url or file location of the subtitle file"
+	echo " -b:                  Clean temporary and output files before running"
+	echo " -a:                  Clean temporary files after running"
+	echo " -h:                  Print help message and quit"
+	echo ""
+	echo "See https://github.com/ammrat13/google-translate-anime for more details."
+	echo ""
+}
+
 # Download subroutine. Downloads the video from the url specified
 function download_vid_url () {
 	# Check each possible site
@@ -79,7 +98,7 @@ VIDLOC=""			# Location or url of the video
 SUBLOC=""			# Location or url of the subtitles
 CLEAN_START=false	# Clear temporary and output files on start?
 CLEAN_END=false		# Clear temporary files on end?
-while getopts ":o:k:v:s:ba" opt; do
+while getopts ":o:k:v:s:bah" opt; do
 	case $opt in 
 		o) 
 			ODIR=$OPTARG
@@ -99,8 +118,12 @@ while getopts ":o:k:v:s:ba" opt; do
 		a)
 			CLEAN_END=true
 			;;
+		h)
+			help_mess
+			exit
+			;;
 		\?)
-			echo "Error: Invalid option encountered -$OPTARG"
+			help_mess
 			exit
 			;;
 		:)
@@ -111,10 +134,14 @@ done
 # Make sure output directory and key were set
 if [[ -z "$ODIR" ]]; then
 	echo "Error: Output directory is required"
+	echo ""
+	help_mess
 	exit
 fi
 if [[ -z "$APIKEY" ]]; then
 	echo "Error: Google Cloud API key is required"
+	echo ""
+	help_mess
 	exit
 fi
 
