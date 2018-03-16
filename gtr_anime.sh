@@ -36,6 +36,45 @@ function download_sub_url () {
 	fi
 }
 
+# Takes in a number n and a string and writes the string to stdout with line 
+# breaks so no line is longer than n characters
+function break_on_n () {
+	IFS=" "
+	count=0
+	line=""
+	for word in $2; do
+		if (( count + ${#word} + 1 > $1 )); then
+			echo $line
+			count=0
+			line=""
+		fi
+		line="$line$word "
+		count=$((count + ${#word} + 1))
+	done
+
+	if [[ ! -z $line ]]; then
+		echo $line
+	fi
+	IFS=$' \t\n'
+}
+
+# Takes an srt formatted time and returns the time in seconds
+function srt_to_sec () {
+	IFS=":," ss=($1)
+	IFS=$' \t\n'
+	echo $(echo "${ss[0]} * 3600 + ${ss[1]} * 60 + ${ss[2]} + ${ss[3]} * 0.01" | bc | awk '{printf "%.2f\n", $0}')
+}
+
+# Takes an srt file and returns the time intervals in the file, one per line
+function srt_time_ints () {
+	IFS=$'\n'
+	for line in $(cat $1 | grep " --> "); do
+		ts=($(echo $line | sed "s/ --> /\n/g"))
+		echo "$(srt_to_sec ${ts[0]}),$(srt_to_sec ${ts[1]})"
+	done
+	IFS=$' \t\n'
+}
+
 
 # Parse command line options
 APIKEY=""			# API Key for Google Cloud
@@ -154,7 +193,7 @@ echo ""
 
 
 # Get the times for each clip
-vid_times=($(./get_times.py "$ODIR/old.srt"))
+vid_times=($(srt_time_ints "$ODIR/old.srt"))
 
 echo "Splitting video into flac files and translating ..."
 for line in ${vid_times[@]}; do
@@ -228,15 +267,34 @@ for line in ${vid_times[@]}; do
 	IFS=$' \t\n'
 	cat "$ODIR/tmp/${ts[0]}.sub.txt" >> $ODIR/tmp/raw_subs.txt
 done
-./new_subs.py $ODIR/old.srt $ODIR/tmp/raw_subs.txt > $ODIR/new.srt
+IFS=$(echo -en "\n\b") raw_subs=($(cat "$ODIR/tmp/raw_subs.txt"))
+IFS=$' \t\n'
+
+# Write subtitles
+> $ODIR/new.srt
+IFS=$'\n'
+i=0;
+cat "$ODIR/old.srt" | sed "/[[:alpha:]]/d" | while read line; do
+	if [[ -z $line ]]; then
+		if [[ "${raw_subs[$i]}" == "null" ]]; then
+			echo "[Censored]" >> $ODIR/new.srt
+		else
+			break_on_n 50 "${raw_subs[$i]}" >> $ODIR/new.srt
+		fi
+		echo "" >> $ODIR/new.srt
+		i=$i+1
+	else
+		echo $line >> $ODIR/new.srt
+	fi
+done
+IFS=$' \t\n'
+unset i
 
 echo ""
 
 
 # Generate new voices if we have not already
 echo "Generating voiceovers ..."
-IFS=$(echo -en "\n\b") raw_subs=($(cat "$ODIR/tmp/raw_subs.txt"))
-IFS=$' \t\n'
 i=0
 for line in ${vid_times[@]}; do
 	# Split on commas into the array ts
