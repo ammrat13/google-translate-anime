@@ -118,6 +118,14 @@ if [[ -z "$APIKEY" ]]; then
 	exit
 fi
 
+# Create the output directories if they do not exist
+if [[ ! -d $ODIR ]]; then
+	mkdir $ODIR
+fi
+if [[ ! -d "$ODIR/tmp" ]]; then
+	mkdir $ODIR/tmp
+fi
+
 # Clean if we have to
 if $CLEAN_START; then
 	echo "Cleaning temporary and output files ..."
@@ -125,14 +133,6 @@ if $CLEAN_START; then
 	rm -rf "$ODIR/tmp"
 	rm -f "$ODIR/new.mp4"
 	rm -f "$ODIR/new.srt"
-fi
-
-# Create the output directories if they do not exist
-if [[ ! -d $ODIR ]]; then
-	mkdir $ODIR
-fi
-if [[ ! -d "$ODIR/tmp" ]]; then
-	mkdir $ODIR/tmp
 fi
 
 
