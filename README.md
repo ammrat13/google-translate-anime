@@ -1,4 +1,4 @@
-# google-translate-anime
+# Google-Translate Anime (DEPRECATED)
 A script that automatically translates anime with Google Translate. It can generate subtitles and dub (though the audio in the dub does not match with the subtitles). Files that are too large to be uploaded have been replaced by a file named `$REPLACEDFILENAME.reference` that contains a description of where to obtain the file.
 
 # Requirements
